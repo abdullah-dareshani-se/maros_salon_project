@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tahira Kalhoro Salon | Maro's Beauty Salon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- DESIGN SYSTEM & CSS VARIABLES --- */
+        :root {
+            --primary-pink: #FFB7C5;
+            --soft-pink: #FFF0F2;
+            --deep-pink: #D47A8A;
+            --white: #FFFFFF;
+            --text-dark: #4A3E40;
+            --text-light: #8A7A7D;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Poppins', sans-serif;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* --- RESET & GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--soft-pink);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- HERO SECTION (SALON BUILDING) --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), url('salon.png.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: absolute;
+            top: -100px; /* Initially hidden above */
+            left: 0;
+            width: 100%;
+            padding: 25px 5%;
+            z-index: 10;
+            display: flex;
+            justify-content: flex-end;
+            transition: var(--transition-smooth);
+        }
+
+        header.reveal {
+            top: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 12px 35px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(212, 122, 138, 0.15);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--deep-pink);
+        }
+
+        /* --- HERO TEXT PANEL --- */
+        .text-panel {
+            position: relative;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 60px 50px;
+            width: 450px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            transform: translateX(-100%); /* Initially hidden to the left */
+            transition: var(--transition-smooth);
+            border-right: 4px solid var(--primary-pink);
+        }
+
+        .text-panel.reveal {
+            transform: translateX(0);
+        }
+
+        .text-panel h1 {
+            font-family: var(--font-serif);
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .text-panel .tagline {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-style: italic;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .text-panel .tagline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 12px;
+            height: 1px;
+            background-color: var(--deep-pink);
+        }
+
+        /* --- SECTION GENERAL STYLES --- */
+        section {
+            padding: 100px 10%;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-pink);
+            margin: 15px auto 0;
+        }
+
+        /* --- ABOUT SECTION --- */
+        #about {
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-img-box {
+            flex: 1;
+            min-width: 300px;
+            height: 420px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(214, 122, 138, 0.12);
+            border: 4px solid var(--soft-pink);
+        }
+
+        .about-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .about-img-box:hover img {
+            transform: scale(1.04);
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content h2 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .about-content h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-pink);
+            margin-top: 10px;
+        }
+
+        .about-content p {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: var(--soft-pink);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        }
+
+        .feature-item i {
+            color: var(--deep-pink);
+            font-size: 1.4rem;
+            margin-top: 3px;
+        }
+
+        .feature-text h4 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .feature-text p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        /* --- SERVICES SECTION WITH IMAGES STYLE --- */
+        #services {
+            background-color: var(--soft-pink);
+        }
+
+        section#services.visible {
+            background-color: #FFF6F7; 
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 183, 197, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Image Box inside service cards */
+        .service-img-box {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        /* Content Text Box inside cards */
+        .service-content {
+            padding: 30px 25px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .service-icon {
+            font-size: 1.6rem;
+            color: var(--deep-pink);
+            margin-bottom: 12px;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Hover animations match feel */
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(214, 122, 138, 0.15);
+            border-color: var(--primary-pink);
+        }
+
+        .service-card:hover .service-img-box img {
+            transform: scale(1.08);
+        }
+
+        /* --- ADDRESS & CONTACT SECTIONS CONTAINER --- */
+        .connect-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background-color: var(--soft-pink);
+        }
+
+        .connect-box {
+            flex: 1;
+            min-width: 300px;
+            background: var(--white);
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255, 183, 197, 0.3);
+        }
+
+        /* Address Specific Animation Placement */
+        #address-box {
+            transform: translateX(50px);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        section.visible #address-box {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .connect-box h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .subtitle {
+            color: var(--deep-pink);
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .location-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            background: var(--soft-pink);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .location-details i {
+            color: #E9573F;
+            font-size: 1.4rem;
+        }
+
+        /* Contact Details & Timing Layout */
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item, .timing-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: var(--soft-pink);
+        }
+
+        .timing-item {
+            cursor: default; /* Timing is informative, non-clickable */
+        }
+
+        .contact-item i, .timing-item i {
+            width: 45px;
+            height: 45px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-pink);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .contact-item span, .timing-item span {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .contact-item:hover {
+            transform: translateX(8px);
+            background: var(--primary-pink);
+            color: var(--white);
+        }
+
+        .contact-item:hover i {
+            color: var(--deep-pink);
+            transform: scale(1.1);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--white);
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--soft-pink);
+        }
+
+        footer h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        footer p {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .text-panel {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                padding: 40px;
+                border-right: none;
+                border-top: 4px solid var(--primary-pink);
+                transform: translateY(100%);
+            }
+
+            .text-panel.reveal {
+                transform: translateY(0);
+            }
+
+            header {
+                justify-content: center;
+            }
+
+            .nav-links {
+                gap: 20px;
+                padding: 10px 25px;
+            }
+
+            #about {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav-links {
+                gap: 12px;
+                padding: 8px 15px;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+            .text-panel h1 {
+                font-size: 2rem;
+            }
+            section {
+                padding: 60px 5%;
+            }
+            #address-box {
+                transform: translateY(30px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero" id="home" onclick="revealHeroComponents()" onmouseenter="revealHeroComponents()">
+        
+        <header id="main-header">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#connect">Address</a></li>
+                <li><a href="#connect">Contact</a></li>
+            </ul>
+        </header>
+
+        <div class="text-panel" id="hero-panel">
+            <h1>Maro's Beauty Saloon</h1>
+            <h2>Tahira Kalhoro</h2>
+            <p class="tagline">Where beauty meets elegance.</p>
+            <p class="tagline">Reveal your ultimate radiance.</p>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="about-img-box">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80" alt="Tahira Kalhoro Salon Inside">
+        </div>
+        
+        <div class="about-content">
+            <h2>Why Choose Maro's</h2>
+            <p>At Maro's Beauty Salon, we believe that beauty is not just about looking good, it's about feeling spectacular. We provide a luxury oasis right here in Larkana, where you can unwind and transform.</p>
+            
+            <div class="about-features">
+                <!-- Feature 1: 100% Branded Products -->
+                <div class="feature-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div class="feature-text">
+                        <h4>100% Branded Products</h4>
+                        <p>We exclusively use high-end, original international brands for your delicate skin and hair care.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Hygienic & Safe Environment -->
+                <div class="feature-item">
+                    <i class="fa-solid fa-pump-medical"></i>
+                    <div class="feature-text">
+                        <h4>Hygienic & Safe Environment</h4>
+                        <p>Your safety is our priority. Every tool is strictly sanitized, and we maintain a spotless, clean atmosphere.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Polite & Friendly Staff -->
+                <div class="feature-item">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <div class="feature-text">
+                        <h4>Polite & Friendly Staff</h4>
+                        <p>Our warm, welcoming, and certified salon experts treat you like royalty from the moment you step in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION WITH PREMIUM IMAGE LAYOUTS -->
+    <section id="services">
+        <h2 class="section-title">Our Premium Services</h2>
+        <div class="services-grid">
+            
+            <!-- Service 1: Facial -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="facial.jpg" alt="Facial & Hydra Facial">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-sparkles service-icon"></i>
+                    <h3>Facial & Hydra Facial</h3>
+                    <p>Deeply cleanse, hydrate, and rejuvenate your skin cells for an instant luxury glow.</p>
+                </div>
+            </div>
+
+            <!-- Service 2: Manicure & Pedicure -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="pedicure.jpg" alt="Manicure & Pedicure">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-hand-sparkles service-icon"></i>
+                    <h3>Manicure & Pedicure</h3>
+                    <p>Treat your hands and feet to standard-setting therapies, grooming, and luxury finishes.</p>
+                </div>
+            </div>
+
+            <!-- Service 3: Hair Cut -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="haircut.jpeg" alt="Hair Cut">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-scissors service-icon"></i>
+                    <h3>Hair Cut</h3>
+                    <p>Transform your look with modern, precise, custom cuts tailored uniquely to you.</p>
+                </div>
+            </div>
+
+            <!-- Service 4: Bridal Makeup -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="dulhan.jpeg" alt="Bridal Makeup">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-gem service-icon"></i>
+                    <h3>Bridal Makeup</h3>
+                    <p>Timeless, premium elegance designed to make you stunning on your most special day.</p>
+                </div>
+            </div>
+
+            <!-- Service 5: Party Makeup -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="makeup.jpg" alt="Party Makeup">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-wand-magic-sparkles service-icon"></i>
+                    <h3>Party Makeup</h3>
+                    <p>Striking look accents and balanced styling made to keep heads turning all night.</p>
+                </div>
+            </div>
+
+            <!-- Service 6: Eyebrows Shaping -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="eyebrow.jpg" alt="Eyebrows Shaping">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-eye service-icon"></i>
+                    <h3>Eyebrows Shaping</h3>
+                    <p>Flawless mapping and sharp architecture to frame your face perfectly.</p>
+                </div>
+            </div>
+
+            <!-- Service 7: Waxing -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="waxing.jpeg" alt="Waxing">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-hot-tub-person service-icon"></i>
+                    <h3>Waxing</h3>
+                    <p>Smooth, gentle, and long-lasting hair removal treatments for silky, radiant skin.</p>
+                </div>
+            </div>
+
+            <!-- Service 8: Hair Styling -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="hair styling.jpeg" alt="Hair Styling">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-feather-pointed service-icon"></i>
+                    <h3>Hair Styling</h3>
+                    <p>Gorgeous buns, braids, and customized up-dos to match your premium event attire.</p>
+                </div>
+            </div>
+
+            <!-- Service 9: Straightening & Curling -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="straightening.jpeg" alt="Straightening and Curling">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-wind service-icon"></i>
+                    <h3>Straightening & Curling</h3>
+                    <p>Flawless sleek straight look or bouncy, voluminous glam curls crafted to perfection.</p>
+                </div>
+            </div>
+
+            <!-- Service 10: Mehndi -->
+            <div class="service-card">
+                <div class="service-img-box">
+                    <img src="mehndi2.jpg" alt="Mehndi">
+                </div>
+                <div class="service-content">
+                    <i class="fa-solid fa-leaf service-icon"></i>
+                    <h3>Mehndi</h3>
+                    <p>Intricate, breathtaking classic and modern henna patterns applied with mastery.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONNECT SECTION (CONTACT & ADDRESS) -->
+    <section id="connect" class="connect-container">
+        
+        <div class="connect-box">
+            <h3>Get In Touch</h3>
+            <p class="subtitle">Book your slot anytime</p>
+            
+            <div class="contact-methods">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/923223604563" target="_blank" class="contact-item">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>0322 3604563 (WhatsApp / Call)</span>
+                </a>
+                <!-- Email -->
+                <a href="mailto:tahirakalhoro8@gmail.com" class="contact-item">
+                    <i class="fa-regular fa-envelope"></i>
+                    <span>tahirakalhoro8@gmail.com</span>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/marosbeautysalon" target="_blank" class="contact-item">
+                    <i class="fa-brands fa-instagram"></i>
+                    <span>@marosbeautysalon</span>
+                </a>
+                <!-- Salon Timings (New Addition) -->
+                <div class="timing-item">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Mon - Sun: 12:00 PM - 08:00 PM</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="connect-box" id="address-box">
+            <h3>Maro’s Beauty Salon – Larkana</h3>
+            <p class="subtitle">Bridal, Makeup, Skincare, Hair, Wax, Facial</p>
+            
+            <div class="location-details">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Ahsan Colony Phase 2</span>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <h2>Thank you for visiting our website</h2>
+        <p>Invest in your hair and skin, it is the crown you never take off.</p>
+    </footer>
+
+    <script>
+        // 1. Hero Interaction (Trigger header and left panel animations)
+        function revealHeroComponents() {
+            document.getElementById('hero-panel').classList.add('reveal');
+            document.getElementById('main-header').classList.add('reveal');
+        }
+
+        // 2. Smooth Scroll Animation Observer (Triggers as user scrolls down)
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            root: null,
+            threshold: 0.15, // Triggers when 15% of the element is visible
+            rootMargin: "0px"
+        };
+
+        const sectionObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+    </script>
+</body>
+</html>
